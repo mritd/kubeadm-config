@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+  labels:
+    app: traefik-dashboard
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`dsvc.chouti.com`)
+    kind: Rule
+    services:
+    - name: api@internal
+      kind: TraefikService

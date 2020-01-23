@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  namespace: kube-addons
+  labels:
+    app: traefik
+spec:
+  type: "LoadBalancer"
+  selector:
+    app: traefik
+  ports:
+  - port: 2080
+    name: web
+    targetPort: 2080
+  - port: 2443
+    name: websecure
+    targetPort: 2443

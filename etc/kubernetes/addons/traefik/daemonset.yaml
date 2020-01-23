@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: traefik
+  namespace: kube-addons
+  labels:
+    app: traefik
+spec:
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      serviceAccountName: traefik
+      terminationGracePeriodSeconds: 60
+      hostNetwork: true
+      containers:
+      - image: traefik:2.1.1
+        name: traefik
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+          limits:
+            cpu: "300m"
+            memory: "150Mi"
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 2180
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 2180
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        ports:
+        - name: traefik
+          containerPort: 2180
+          protocol: TCP
+        - name: web
+          containerPort: 2080
+          protocol: TCP
+        - name: websecure
+          containerPort: 2443
+          protocol: TCP
+        args:
+          - "--global.checknewversion=true"
+          - "--global.sendanonymoususage=true"
+          - "--entryPoints.traefik.address=:2180"
+          - "--entryPoints.web.address=:2080"
+          - "--entryPoints.websecure.address=:2443"
+          - "--api.dashboard=true"
+          - "--ping=true"
+          - "--providers.kubernetescrd"
+          - "--metrics.prometheus=true"
+          - "--log.level=INFO"
+      affinity:
+      tolerations:
+      nodeSelector:
