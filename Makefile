@@ -29,9 +29,9 @@ clean:
 	fi
 
 release: all
-	ghr -u mritd -t ${GITHUB_RELEASE_TOKEN} -replace -recreate --debug v${BUILD_VERSION} dist 
+	ghr -u mritd -t ${GITHUB_TOKEN} -replace -recreate --debug v${BUILD_VERSION} dist 
 
 pre-release: all
-	ghr -u mritd -t ${GITHUB_RELEASE_TOKEN} -replace -recreate -prerelease --debug v${BUILD_VERSION} dist
+	ghr -u mritd -t ${GITHUB_TOKEN} -replace -recreate -prerelease --debug v${BUILD_VERSION} dist
 
 .PHONY : all deb clean release pre-release
