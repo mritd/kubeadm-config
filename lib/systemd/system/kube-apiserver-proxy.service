@@ -12,7 +12,7 @@ ExecStart=/usr/bin/docker run \
                           --net=host \
                           --restart=on-failure:5 \
                           --memory=512M \
-                          nginx:1.17.6-alpine
+                          nginx:1.17.8-alpine
 ExecStartPre=-/usr/bin/docker rm -f kube-apiserver-proxy
 ExecStop=/usr/bin/docker rm -rf kube-apiserver-proxy
 Restart=always
