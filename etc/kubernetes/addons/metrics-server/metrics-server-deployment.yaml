@@ -33,6 +33,11 @@ spec:
         args:
           - --cert-dir=/tmp
           - --secure-port=4443
+          # fix "no metrics known for node" error
+          # first you need to ensure that the kubernetes node hostname can be resolved normally in the cluster dns (coredns)
+          # refs: https://github.com/kubernetes-sigs/metrics-server/issues/143
+          - --kubelet-preferred-address-types=InternalDNS,InternalIP,ExternalDNS,ExternalIP,Hostname
+          - --kubelet-insecure-tls
         ports:
         - name: main-port
           containerPort: 4443
