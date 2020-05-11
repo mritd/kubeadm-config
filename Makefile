@@ -34,4 +34,4 @@ release: all
 pre-release: all
 	ghr -u mritd -t ${GITHUB_TOKEN} -replace -recreate -prerelease --debug v${BUILD_VERSION} dist
 
-.PHONY : all deb clean release pre-release
+.PHONY: all deb clean release pre-release
