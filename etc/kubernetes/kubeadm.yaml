@@ -37,6 +37,9 @@ apiServer:
     runtime-config: "api/all=true"
     service-node-port-range: "30000-50000"
     service-cluster-ip-range: "10.25.0.0/16"
+    # The fraction of requests that will be closed gracefully(GOAWAY) to prevent
+    # HTTP/2 clients from getting stuck on a single apiserver.
+    goaway-chance: 0.001
 #  extraVolumes:
 #  - name: "audit-config"
 #    hostPath: "/etc/kubernetes/audit-policy.yaml"
@@ -52,13 +55,15 @@ apiServer:
   - "172.16.10.21"
   - "172.16.10.22"
   - "172.16.10.23"
-  timeoutForControlPlane: 5m
+  timeoutForControlPlane: 1m
 controllerManager:
   extraArgs:
     v: "4"
     node-cidr-mask-size: "19"
     deployment-controller-sync-period: "10s"
-    experimental-cluster-signing-duration: "86700h"
+    # Use the default expiration time because '--use-api' has been deprecated
+    # refs https://github.com/kubernetes/kubernetes/pull/88827
+    experimental-cluster-signing-duration: "8670h"
     node-monitor-grace-period: "20s"
     pod-eviction-timeout: "2m"
     terminated-pod-gc-threshold: "30"
@@ -66,7 +71,8 @@ scheduler:
   extraArgs:
     v: "4"
 certificatesDir: "/etc/kubernetes/pki"
-imageRepository: "gcr.azk8s.cn/google_containers"
+# Remove the imageRepository because gcr.azk8s.cn is no available
+#imageRepository: "gcr.azk8s.cn/google_containers"
 clusterName: "kuberentes"
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
