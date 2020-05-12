@@ -39,7 +39,7 @@ apiServer:
     service-cluster-ip-range: "10.25.0.0/16"
     # The fraction of requests that will be closed gracefully(GOAWAY) to prevent
     # HTTP/2 clients from getting stuck on a single apiserver.
-    goaway-chance: 0.001
+    goaway-chance: "0.001"
 #  extraVolumes:
 #  - name: "audit-config"
 #    hostPath: "/etc/kubernetes/audit-policy.yaml"
