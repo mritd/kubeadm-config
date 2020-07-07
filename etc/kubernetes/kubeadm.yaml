@@ -21,7 +21,7 @@ networking:
   serviceSubnet: "10.25.0.0/16"
   podSubnet: "10.30.0.1/16"
   dnsDomain: "cluster.local"
-kubernetesVersion: "v1.18.3"
+kubernetesVersion: "v1.18.5"
 controlPlaneEndpoint: "127.0.0.1:6443"
 apiServer:
   extraArgs:
@@ -37,6 +37,8 @@ apiServer:
     runtime-config: "api/all=true"
     service-node-port-range: "30000-50000"
     service-cluster-ip-range: "10.25.0.0/16"
+#    insecure-bind-address: "0.0.0.0"
+#    insecure-port: "8080"
     # The fraction of requests that will be closed gracefully(GOAWAY) to prevent
     # HTTP/2 clients from getting stuck on a single apiserver.
     goaway-chance: "0.001"
