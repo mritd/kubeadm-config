@@ -17,7 +17,7 @@ deb: clean
 		--deb-systemd-enable \
 		--no-deb-systemd-auto-start \
 		--no-deb-systemd-restart-after-upgrade \
-		lib etc
+		etc
 	mv *.deb dist
 
 clean:
