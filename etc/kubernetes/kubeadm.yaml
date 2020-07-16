@@ -8,6 +8,7 @@ certificateKey: 7373f829c733b46fb78f0069f90185e0f00254381641d8d5a7c5984b2cf17cd3
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
+kubernetesVersion: "v1.18.6"
 etcd:
   external:
     endpoints:
@@ -21,7 +22,6 @@ networking:
   serviceSubnet: "10.25.0.0/16"
   podSubnet: "10.30.0.1/16"
   dnsDomain: "cluster.local"
-kubernetesVersion: "v1.18.5"
 controlPlaneEndpoint: "127.0.0.1:6443"
 apiServer:
   extraArgs:
@@ -63,8 +63,6 @@ controllerManager:
     v: "4"
     node-cidr-mask-size: "19"
     deployment-controller-sync-period: "10s"
-    # Use the default expiration time because '--use-api' has been deprecated
-    # refs https://github.com/kubernetes/kubernetes/pull/88827
     experimental-cluster-signing-duration: "8670h"
     node-monitor-grace-period: "20s"
     pod-eviction-timeout: "2m"
