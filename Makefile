@@ -13,7 +13,11 @@ deb: clean
 		--url https://github.com/mritd/kubeadm-config \
 		--depends kubeadm \
 		--depends kubelet \
-		etc
+		--deb-systemd lib/systemd/system/kube-apiserver-proxy.service \
+		--deb-systemd-enable \
+		--no-deb-systemd-auto-start \
+		--no-deb-systemd-restart-after-upgrade \
+		lib etc
 	mv *.deb dist
 
 clean:
