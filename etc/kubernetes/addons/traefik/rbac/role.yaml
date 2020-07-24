@@ -1,7 +1,8 @@
-kind: ClusterRole
+kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: traefik
+  namespace: kube-addons
   labels:
     app: traefik
 rules:

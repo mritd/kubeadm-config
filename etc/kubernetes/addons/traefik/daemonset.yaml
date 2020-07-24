@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 60
       hostNetwork: true
       containers:
-      - image: traefik:2.1.1
+      - image: traefik:v2.2.7
         name: traefik
         resources:
           requests:
@@ -56,8 +56,8 @@ spec:
           containerPort: 2443
           protocol: TCP
         args:
-          - "--global.checknewversion=true"
-          - "--global.sendanonymoususage=true"
+          - "--global.checknewversion=false"
+          - "--global.sendanonymoususage=false"
           - "--entryPoints.traefik.address=:2180"
           - "--entryPoints.web.address=:2080"
           - "--entryPoints.websecure.address=:2443"
