@@ -8,7 +8,7 @@ certificateKey: 7373f829c733b46fb78f0069f90185e0f00254381641d8d5a7c5984b2cf17cd3
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
-kubernetesVersion: "v1.18.6"
+kubernetesVersion: "v1.19.4"
 etcd:
   external:
     endpoints:

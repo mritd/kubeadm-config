@@ -2,23 +2,22 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: traefik
-  namespace: kube-addons
   labels:
-    app: traefik
+    app.kubernetes.io/name: traefik
 spec:
   selector:
     matchLabels:
-      app: traefik
+      app.kubernetes.io/name: traefik
   template:
     metadata:
       labels:
-        app: traefik
+        app.kubernetes.io/name: traefik
     spec:
       serviceAccountName: traefik
       terminationGracePeriodSeconds: 60
       hostNetwork: true
       containers:
-      - image: traefik:v2.2.7
+      - image: traefik:v2.3.3
         name: traefik
         resources:
           requests:
@@ -55,6 +54,13 @@ spec:
         - name: websecure
           containerPort: 2443
           protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: tmp
+            mountPath: /tmp
+          - name: plugins
+            mountPath: /plugins-storage
         args:
           - "--global.checknewversion=false"
           - "--global.sendanonymoususage=false"
@@ -63,9 +69,16 @@ spec:
           - "--entryPoints.websecure.address=:2443"
           - "--api.dashboard=true"
           - "--ping=true"
-          - "--providers.kubernetescrd"
+          - "--providers.kubernetescrd=true"
           - "--metrics.prometheus=true"
           - "--log.level=INFO"
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+        - name: plugins
+          emptyDir: {}
       affinity:
       tolerations:
       nodeSelector:

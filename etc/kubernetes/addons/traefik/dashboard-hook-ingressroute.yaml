@@ -2,12 +2,11 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: traefik-dashboard
-  namespace: kube-addons
   labels:
-    app: traefik-dashboard
+    app.kubernetes.io/name: traefik
 spec:
   entryPoints:
-  - traefik
+    - traefik
   routes:
   - match: Host(`svc.kubernetes.node`)
     kind: Rule
